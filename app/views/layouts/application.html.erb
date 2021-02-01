@@ -1,16 +1,64 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>TodolistStimulus</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<!doctype html>
+<html lang="en">
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<head>
+  <title>TodolistStimulus</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <style>
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+</head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body class="bg-light">
+  <div class="container">
+    <div class="py-5 text-center">
+      <h2>Todo List</h2>
+      <p class="lead">Below is an example app built with Rails, Bootstrap and StimulusJS.</p>
+    </div>
+
+    <%= render 'form' %>
+
+    <br>
+
+    <div class="row">
+      <div class="col-md-12 order-md-2 mb-4">
+        <ul class="list-group">
+          <% @todos.each do |todo| %>
+          <li class="list-group-item d-flex justify-content-between align-items-center <%= todo.done ? 'list-group-item active' : 'list-group-item-warning' %>">
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="mb-1"><%= todo.title %></h6>
+              <small><%= "#{time_ago_in_words(todo.created_at)} ago" %></small>
+            </div>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center <%= todo.done ? 'list-group-item active' : 'list-group-item-warning' %>">
+            <div class="d-flex w-100 justify-content-between">
+              <p class="mb-1"><%= todo.description %></p>
+              
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck<%= todo.id %>">
+                <label class="form-check-label" for="exampleCheck<%= todo.id %>"><%=todo.done ? 'Done!' : 'Done?' %></label>
+              </div>
+            </div>
+          </li>
+          <br>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <footer class="my-5 pt-5 text-muted text-center text-small">
+      <p class="mb-1">&copy; 2017-2021 Pedro Ivo</p>
+    </footer>
+  </div>
+
+</body>
+
 </html>
