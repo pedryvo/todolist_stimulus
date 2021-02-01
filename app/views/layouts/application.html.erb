@@ -44,8 +44,8 @@
               <p class="mb-1"><%= todo.description %></p>
               
               <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck<%= todo.id %>">
-                <label class="form-check-label" for="exampleCheck<%= todo.id %>"><%=todo.done ? 'Done!' : 'Done?' %></label>
+                <input type="checkbox" class="form-check-input" id="<%= todo.id %>" data-controller='todo' data-todo-target='toggle' data-action='change->todo#toggle'>
+                <label class="form-check-label" for="<%= todo.id %>"><%=todo.done ? 'Done!' : 'Done?' %></label>
               </div>
             </div>
           </li>

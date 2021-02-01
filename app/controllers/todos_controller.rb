@@ -1,9 +1,9 @@
 class TodosController < ApplicationController
-  before_action :set_todo, only: %i[ show edit update destroy ]
+  before_action :set_todo, only: %i[ show edit update destroy toggle ]
 
   # GET /todos or /todos.json
   def index
-    @todos = Todo.all
+    @todos = Todo.all.order(created_at: :desc)
   end
 
   # GET /todos/1 or /todos/1.json
@@ -25,10 +25,10 @@ class TodosController < ApplicationController
 
     respond_to do |format|
       if @todo.save
-        format.html { redirect_to @todo, notice: "Todo was successfully created." }
+        format.html { redirect_to todos_path, notice: "Todo was successfully created." }
         format.json { render :show, status: :created, location: @todo }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to todos_path, notice: "There was an error." }
         format.json { render json: @todo.errors, status: :unprocessable_entity }
       end
     end
@@ -42,6 +42,19 @@ class TodosController < ApplicationController
         format.json { render :show, status: :ok, location: @todo }
       else
         format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @todo.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # PATCH/PUT todos/1/toggle
+  def toggle
+    @todo.done = !@todo.done
+    
+    respond_to do |format|
+      if @todo.save
+        format.json { render :show, status: :ok, location: @todo }
+      else
         format.json { render json: @todo.errors, status: :unprocessable_entity }
       end
     end

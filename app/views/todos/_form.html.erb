@@ -1,9 +1,9 @@
-<%= form_for :todo, class: 'form-group' do |form| %>
+<%= form_for :todo, class: 'form-group', data: { controller: 'todo', 'todo-target' => 'submitForm' } do |form| %>
   <div class="input-group">
     <%= form.text_field :title, class: 'form-control input-sm', placeholder: 'Title', required: true %>
   </div>
   <div class="input-group">
     <%= form.text_area :description, class: 'form-control', placeholder: 'Description', required: true %>
   </div>
-  <%= form.submit 'Add Todo', class: 'btn btn-primary col-md-12' %>
+  <%= form.submit 'Add Todo', class: 'btn btn-primary col-md-12'%>
 <% end %>
